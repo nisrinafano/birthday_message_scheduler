@@ -93,21 +93,6 @@ class user_controller extends Controller
     }
 
     public static function send_message_email(Array $users, string $message_type) {
-        /* $handle = curl_init('https://eo93xtp2drzt01e.m.pipedream.net');
-
-        $data = [
-            'email' => $users['email'],
-            'message' => 'Hey, ' . $users['first_name'] . ' ' . $users['last_name'] . ' it\'s your ' . $message_type 
-        ];
-
-        $encodedData = json_encode($data);
-
-        curl_setopt($handle, CURLOPT_POST, 1);
-        curl_setopt($handle, CURLOPT_POSTFIELDS, $encodedData);
-        curl_setopt($handle, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-        $result = curl_exec($handle); */
-
         $email_message = 'Hey, ' . $users['first_name'] . ' ' . $users['last_name'] . ' it\'s your ' . $message_type;
         
         $response = Http::post('https://eo93xtp2drzt01e.m.pipedream.net', [

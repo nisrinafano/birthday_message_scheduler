@@ -30,6 +30,9 @@ class user_controller extends Controller
                 'timezone' => 'required'
             ]);
 
+            $valid_email = ( ! preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $request->email)) ? FALSE : TRUE;
+            if (!$valid_email) return api_formatter::create_api(400, 'Email invalid');
+
             $user_birthday = user_birthday::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -62,6 +65,9 @@ class user_controller extends Controller
             ]);
 
             $user_birthday = user_birthday::find($id);
+
+            $valid_email = ( ! preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $request->email)) ? FALSE : TRUE;
+            if (!$valid_email) return api_formatter::create_api(400, 'Email invalid');
 
             $user_birthday->update([
                 'first_name' => $request->first_name,

@@ -98,21 +98,21 @@ class user_controller extends Controller
         else return api_formatter::create_api(400, 'Data not deleted');
     }
 
-    public static function send_message_email(Array $users, string $message_type) {
-        $email_message = 'Hey, ' . $users['first_name'] . ' ' . $users['last_name'] . ' it\'s your ' . $message_type;
+    public static function send_message_email($users, string $message_type) {
+        $email_message = 'Hey, ' . $users->first_name . ' ' . $users->last_name . ' it\'s your ' . $message_type;
         
         $response = Http::post('https://eo93xtp2drzt01e.m.pipedream.net', [
-            'email' => $users['email'],
+            'email' => $users->email,
             'message' => $email_message
         ]);
 
         // log unsend message
         if (!$response->ok()) {
             $user_birthday = user_birthday::create([
-                'user_id' => $users['id'],
-                'email' => $users['email'],
+                'user_id' => $users->id,
+                'email' => $users->email,
                 'message' => $email_message,
-                'timezone' => $users['timezone'],
+                'timezone' => $users->timezone,
                 'status' => $response->status()
             ]);
         }

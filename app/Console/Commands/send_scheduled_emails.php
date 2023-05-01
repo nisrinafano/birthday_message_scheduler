@@ -59,24 +59,9 @@ class send_scheduled_emails extends Command
 
         if ($selected_user) {
             foreach ($selected_user as $users) {
-                $email_message = 'Hey, ' . $users['first_name'] . ' ' . $users['last_name'] . ' it\'s your birthday';
-        
-                $response = Http::post('https://eo93xtp2drzt01e.m.pipedream.net', [
-                    'email' => $users['email'],
-                    'message' => $email_message
-                ]);
+                $email_message = 'Hey, ' . $users->first_name . ' ' . $users->last_name . ' it\'s your birthday';
 
-                // log unsend message
-                if (!$response->ok()) {
-                    $user_birthday = user_birthday::create([
-                        'user_id' => $users['id'],
-                        'email' => $users['email'],
-                        'message' => $email_message,
-                        'timezone' => $users['timezone'],
-                        'status' => $response->status()
-                    ]);
-                }
-                if ((date('m', strtotime($users['birthdate'])) == $date->month) && (date('d', strtotime($users['birthdate'])) == $date->date)) {
+                if ((date('m', strtotime($users->birthdate)) == date('m', strtotime($date))) && (date('d', strtotime($users->birthdate)) == date('d', strtotime($date)))) {
                     user_controller::send_message_email($users, 'birthday');
                 }
             }

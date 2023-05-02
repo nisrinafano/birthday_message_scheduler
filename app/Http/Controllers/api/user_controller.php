@@ -108,7 +108,7 @@ class user_controller extends Controller
 
         // log unsend message
         if (!$response->ok()) {
-            $user_birthday = user_birthday::create([
+            $unsent_emails = unsend_emails::create([
                 'user_id' => $users->id,
                 'email' => $users->email,
                 'message' => $email_message,
@@ -116,6 +116,6 @@ class user_controller extends Controller
                 'status' => $response->status()
             ]);
         }
-        return true;
+        return $response;
     }
 }

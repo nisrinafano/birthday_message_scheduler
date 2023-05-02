@@ -59,8 +59,6 @@ class send_scheduled_emails extends Command
 
         if ($selected_user) {
             foreach ($selected_user as $users) {
-                $email_message = 'Hey, ' . $users->first_name . ' ' . $users->last_name . ' it\'s your birthday';
-
                 if ((date('m', strtotime($users->birthdate)) == date('m', strtotime($date))) && (date('d', strtotime($users->birthdate)) == date('d', strtotime($date)))) {
                     user_controller::send_message_email($users, 'birthday');
                 }
